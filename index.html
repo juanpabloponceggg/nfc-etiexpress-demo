@@ -174,9 +174,8 @@
 </footer>
 
 <script>
-  // BASE_URL: dominio público desde donde se sirven los productos.
-  // Si el tunnel cambia, actualizar esta línea y regrabar los chips.
-  const BASE_URL = "https://juanpabloponceggg.github.io/nfc-etiexpress-demo";
+  // BASE_URL: dominio público permanente en Vercel.
+  const BASE_URL = "https://nfc-etiexpress-demo.vercel.app";
 
   const PRODUCTS = [
     {
@@ -232,7 +231,7 @@
   ];
 
   function buildUrl(p) {
-    return BASE_URL + "/p/" + p.slug + ".html?uid=" + p.uid + "&c=001&sig=" + p.sig;
+    return BASE_URL + "/p/" + p.slug + "?uid=" + p.uid + "&c=001&sig=" + p.sig;
   }
 
   function fmtBytes(hex) {
@@ -308,7 +307,7 @@
     btnCopy.addEventListener("click", () => copyUrl(p.slug));
     btnRow.appendChild(btnCopy);
 
-    const btnView = el("a", { cls: "btn btn-outline", html: SVG_EXT, attrs: { href: "/p/" + p.slug + ".html?uid=" + p.uid + "&c=001&sig=" + p.sig, target: "_blank", rel: "noopener" } });
+    const btnView = el("a", { cls: "btn btn-outline", html: SVG_EXT, attrs: { href: "/p/" + p.slug + "?uid=" + p.uid + "&c=001&sig=" + p.sig, target: "_blank", rel: "noopener" } });
     btnView.appendChild(document.createTextNode(" Ver landing"));
     btnRow.appendChild(btnView);
 

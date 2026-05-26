@@ -1,24 +1,21 @@
 # Chips a grabar — 5 productos demo
 
-> **Dominio público PERMANENTE:** `https://juanpabloponceggg.github.io/nfc-etiexpress-demo`
-> Hospedado en GitHub Pages — vive para siempre, no depende de tu Mac.
-> Repo: https://github.com/juanpabloponceggg/nfc-etiexpress-demo
+> **Dominio público PERMANENTE:** `https://nfc-etiexpress-demo.vercel.app`
+> Hospedado en Vercel — vive para siempre, no depende de tu Mac.
 
 ---
 
 ## 🥃 Chip #1 — Casa D'Aristi · Xtabentún
 
-**Producto físico:** botella Xtabentún Tradicional 750 ml (etiqueta con NFC pegado al cuello o tapa).
-
 **URL a grabar:**
 ```
-https://juanpabloponceggg.github.io/nfc-etiexpress-demo/p/daristi.html?uid=04A8B2C9F1E380&c=001&sig=A7F2C9B36E1D4892
+https://nfc-etiexpress-demo.vercel.app/p/daristi?uid=04A8B2C9F1E380&c=001&sig=A7F2C9B36E1D4892
 ```
 
-**Datos del chip (qué representa cada parámetro):**
-- `uid` — `04A8B2C9F1E380` (UID único del chip, formato real NTAG)
-- `c` — `001` (read counter inicial)
-- `sig` — `A7F2C9B36E1D4892` (CMAC signature — falsa pero realista)
+**Datos del chip:**
+- `uid` — `04A8B2C9F1E380`
+- `c` — `001`
+- `sig` — `A7F2C9B36E1D4892`
 
 **Caso de uso:** Anti-falsificación + storytelling + recompra DTC internacional.
 
@@ -28,11 +25,9 @@ https://juanpabloponceggg.github.io/nfc-etiexpress-demo/p/daristi.html?uid=04A8B
 
 ## 🍫 Chip #2 — Ki'Xocolatl · Tableta 72% Plantación Ticul
 
-**Producto físico:** tableta 70g de chocolate Ki'Xocolatl 72% (etiqueta interior con NFC).
-
 **URL a grabar:**
 ```
-https://juanpabloponceggg.github.io/nfc-etiexpress-demo/p/kixocolatl.html?uid=04F13C2D8B9000&c=001&sig=9C81B42F5EA17D30
+https://nfc-etiexpress-demo.vercel.app/p/kixocolatl?uid=04F13C2D8B9000&c=001&sig=9C81B42F5EA17D30
 ```
 
 **Datos del chip:**
@@ -48,11 +43,9 @@ https://juanpabloponceggg.github.io/nfc-etiexpress-demo/p/kixocolatl.html?uid=04
 
 ## 🍯 Chip #3 — Yaal-Kaab · Miel Melipona Xunán Kab
 
-**Producto físico:** frasco 50ml de miel melipona (etiqueta de cuello con NFC).
-
 **URL a grabar:**
 ```
-https://juanpabloponceggg.github.io/nfc-etiexpress-demo/p/yaalkaab.html?uid=047B5E11A2C800&c=001&sig=3D9FE2841B6C5A77
+https://nfc-etiexpress-demo.vercel.app/p/yaalkaab?uid=047B5E11A2C800&c=001&sig=3D9FE2841B6C5A77
 ```
 
 **Datos del chip:**
@@ -68,11 +61,9 @@ https://juanpabloponceggg.github.io/nfc-etiexpress-demo/p/yaalkaab.html?uid=047B
 
 ## 🧶 Chip #4 — Mayajal · Hamaca Auténtica de Tixkokob
 
-**Producto físico:** hamaca matrimonial Mayajal con etiqueta colgante (NFC en la etiqueta).
-
 **URL a grabar:**
 ```
-https://juanpabloponceggg.github.io/nfc-etiexpress-demo/p/mayajal.html?uid=043CF288DE7100&c=001&sig=5EA01C9743B28FE1
+https://nfc-etiexpress-demo.vercel.app/p/mayajal?uid=043CF288DE7100&c=001&sig=5EA01C9743B28FE1
 ```
 
 **Datos del chip:**
@@ -88,11 +79,9 @@ https://juanpabloponceggg.github.io/nfc-etiexpress-demo/p/mayajal.html?uid=043CF
 
 ## 🍺 Chip #5 — Cervecería Patito · Lager Yucateca
 
-**Producto físico:** lata 355ml Lager Yucateca (etiqueta corporal con NFC).
-
 **URL a grabar:**
 ```
-https://juanpabloponceggg.github.io/nfc-etiexpress-demo/p/patito.html?uid=04B8E51A7C0080&c=001&sig=2CD9A5F4817B6E33
+https://nfc-etiexpress-demo.vercel.app/p/patito?uid=04B8E51A7C0080&c=001&sig=2CD9A5F4817B6E33
 ```
 
 **Datos del chip:**
@@ -110,7 +99,7 @@ https://juanpabloponceggg.github.io/nfc-etiexpress-demo/p/patito.html?uid=04B8E5
 
 ## Cómo grabarlos (con la NFC writer local)
 
-1. **Arrancar la NFC writer:** Si no está corriendo, en otra terminal:
+1. **Arrancar la NFC writer:** Si no está corriendo:
    ```bash
    cd ~/Trabajo/Documentos/nfc-writer
    nohup node server.js > /tmp/nfc-writer.log 2>&1 &
@@ -137,11 +126,6 @@ https://juanpabloponceggg.github.io/nfc-etiexpress-demo/p/patito.html?uid=04B8E5
 
 ---
 
-## Si algo falla (ya no es problema del tunnel — GitHub Pages es estable)
+## ⚠ Importante
 
-| Síntoma | Solución |
-|---|---|
-| Banner del iPhone no aparece | El chip no se grabó. Revisa el log de NFC writer. Repite. |
-| El banner aparece pero no abre Safari | Edge case iOS — pide al usuario tocar dos veces la notificación. |
-| Página tarda en cargar (>3s) | Posible DNS lento. Recomienda al stakeholder que use data móvil, no WiFi del lugar. |
-| Tap counter muestra siempre #1 | Es localStorage por chip-uid — si limpias caché del browser se resetea. Para junta normal está OK. |
+**Si ya grababas chips con URLs anteriores (trycloudflare.com o github.io), tienes que REGRABARLOS con estas URLs nuevas de Vercel.** Los chips no se actualizan automáticamente — graban lo que tenían cuando los pusiste sobre el lector.
