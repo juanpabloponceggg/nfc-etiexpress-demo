@@ -1,8 +1,8 @@
 # Chips a grabar — 5 productos demo
 
-> **Dominio público activo:** `https://transition-jar-satellite-routines.trycloudflare.com`
-> **Vida estimada:** 24–48 horas (tunnel Cloudflare temporal).
-> Si se cae antes de la junta: corre `~/Trabajo/Documentos/nfc-etiexpress-demo/restart-tunnel.sh` para regenerar.
+> **Dominio público PERMANENTE:** `https://juanpabloponceggg.github.io/nfc-etiexpress-demo`
+> Hospedado en GitHub Pages — vive para siempre, no depende de tu Mac.
+> Repo: https://github.com/juanpabloponceggg/nfc-etiexpress-demo
 
 ---
 
@@ -12,7 +12,7 @@
 
 **URL a grabar:**
 ```
-https://transition-jar-satellite-routines.trycloudflare.com/p/daristi.html?uid=04A8B2C9F1E380&c=001&sig=A7F2C9B36E1D4892
+https://juanpabloponceggg.github.io/nfc-etiexpress-demo/p/daristi.html?uid=04A8B2C9F1E380&c=001&sig=A7F2C9B36E1D4892
 ```
 
 **Datos del chip (qué representa cada parámetro):**
@@ -32,7 +32,7 @@ https://transition-jar-satellite-routines.trycloudflare.com/p/daristi.html?uid=0
 
 **URL a grabar:**
 ```
-https://transition-jar-satellite-routines.trycloudflare.com/p/kixocolatl.html?uid=04F13C2D8B9000&c=001&sig=9C81B42F5EA17D30
+https://juanpabloponceggg.github.io/nfc-etiexpress-demo/p/kixocolatl.html?uid=04F13C2D8B9000&c=001&sig=9C81B42F5EA17D30
 ```
 
 **Datos del chip:**
@@ -52,7 +52,7 @@ https://transition-jar-satellite-routines.trycloudflare.com/p/kixocolatl.html?ui
 
 **URL a grabar:**
 ```
-https://transition-jar-satellite-routines.trycloudflare.com/p/yaalkaab.html?uid=047B5E11A2C800&c=001&sig=3D9FE2841B6C5A77
+https://juanpabloponceggg.github.io/nfc-etiexpress-demo/p/yaalkaab.html?uid=047B5E11A2C800&c=001&sig=3D9FE2841B6C5A77
 ```
 
 **Datos del chip:**
@@ -72,7 +72,7 @@ https://transition-jar-satellite-routines.trycloudflare.com/p/yaalkaab.html?uid=
 
 **URL a grabar:**
 ```
-https://transition-jar-satellite-routines.trycloudflare.com/p/mayajal.html?uid=043CF288DE7100&c=001&sig=5EA01C9743B28FE1
+https://juanpabloponceggg.github.io/nfc-etiexpress-demo/p/mayajal.html?uid=043CF288DE7100&c=001&sig=5EA01C9743B28FE1
 ```
 
 **Datos del chip:**
@@ -92,7 +92,7 @@ https://transition-jar-satellite-routines.trycloudflare.com/p/mayajal.html?uid=0
 
 **URL a grabar:**
 ```
-https://transition-jar-satellite-routines.trycloudflare.com/p/patito.html?uid=04B8E51A7C0080&c=001&sig=2CD9A5F4817B6E33
+https://juanpabloponceggg.github.io/nfc-etiexpress-demo/p/patito.html?uid=04B8E51A7C0080&c=001&sig=2CD9A5F4817B6E33
 ```
 
 **Datos del chip:**
@@ -125,8 +125,6 @@ https://transition-jar-satellite-routines.trycloudflare.com/p/patito.html?uid=04
    - Chip #4 → "HAM" (Mayajal hamaca)
    - Chip #5 → "PAT" (Patito)
 
-   Esto evita confundirlos cuando los pegues a los productos físicos.
-
 3. **Para cada chip:**
    - Copia la URL completa de este documento (toda la línea).
    - Pégala en el prompt de http://localhost:7402.
@@ -139,12 +137,11 @@ https://transition-jar-satellite-routines.trycloudflare.com/p/patito.html?uid=04
 
 ---
 
-## Si algo falla
+## Si algo falla (ya no es problema del tunnel — GitHub Pages es estable)
 
 | Síntoma | Solución |
 |---|---|
 | Banner del iPhone no aparece | El chip no se grabó. Revisa el log de NFC writer. Repite. |
 | El banner aparece pero no abre Safari | Edge case iOS — pide al usuario tocar dos veces la notificación. |
-| Safari abre URL pero da "no se puede conectar" | El tunnel cayó. Corre `restart-tunnel.sh` y regraba el chip que falle. |
-| Tap counter muestra siempre #1 | Es localStorage por chip-uid — si limpias caché del browser se resetea. Para junta normal está OK. |
 | Página tarda en cargar (>3s) | Posible DNS lento. Recomienda al stakeholder que use data móvil, no WiFi del lugar. |
+| Tap counter muestra siempre #1 | Es localStorage por chip-uid — si limpias caché del browser se resetea. Para junta normal está OK. |
