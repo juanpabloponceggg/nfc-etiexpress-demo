@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Etiexpress · Demo NFC · Junta 27-mayo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0a0e14" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --bg: #0a0e14;
+    --bg-2: #0f141b;
+    --bg-3: #1a2230;
+    --fg: #c5cdd6;
+    --fg-bright: #e5e7eb;
+    --muted: #5a6675;
+    --primary: #3DAE2B;
+    --primary-bright: #6cf04a;
+    --cyan: #00d4ff;
+    --magenta: #cc3366;
+    --yellow: #f0c674;
+    --border: #1a2230;
+  }
+  html, body { background: var(--bg); color: var(--fg); font-family: 'Inter', sans-serif; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  .primary { color: var(--primary); }
+  .primary-bright { color: var(--primary-bright); }
+  .cyan { color: var(--cyan); }
+  .yellow { color: var(--yellow); }
+  .bg-primary { background: var(--primary); color: var(--bg); }
+  .bg-bg2 { background: var(--bg-2); }
+  .bg-bg3 { background: var(--bg-3); }
+  .border-primary { border-color: var(--primary); }
+  .text-muted-d { color: var(--muted); }
+  .text-bright { color: var(--fg-bright); }
+
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px;
+    background: rgba(61,174,43,.12); border: 1px solid rgba(61,174,43,.3);
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--primary-bright);
+  }
+  .pill .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--primary-bright); box-shadow: 0 0 8px var(--primary-bright); animation: pulse 1.8s infinite; }
+
+  .card { background: var(--bg-2); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: all .25s ease; position: relative; }
+  .card:hover { border-color: rgba(61,174,43,.4); transform: translateY(-2px); }
+  .card-accent { width: 4px; height: 100%; background: var(--primary); position: absolute; left: 0; top: 0; border-radius: 12px 0 0 12px; }
+
+  .url-box {
+    background: #060a10; border: 1px solid rgba(61,174,43,.2); border-radius: 8px;
+    padding: 12px 14px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px;
+    color: var(--primary-bright); word-break: break-all; line-height: 1.5;
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 500;
+    transition: all .15s ease; cursor: pointer; border: 1px solid transparent;
+    font-family: 'JetBrains Mono', monospace; text-decoration: none;
+  }
+  .btn-primary { background: var(--primary); color: var(--bg); }
+  .btn-primary:hover { background: var(--primary-bright); }
+  .btn-outline { background: transparent; color: var(--primary-bright); border-color: rgba(108,240,74,.3); }
+  .btn-outline:hover { background: rgba(108,240,74,.08); border-color: var(--primary-bright); }
+  .btn-ghost { background: transparent; color: var(--muted); border-color: var(--border); }
+  .btn-ghost:hover { color: var(--fg-bright); border-color: var(--fg-bright); }
+
+  .product-icon {
+    width: 56px; height: 56px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
+    background: var(--primary); color: var(--bg); padding: 12px 18px; border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600;
+    opacity: 0; transition: all .3s ease; z-index: 100;
+    box-shadow: 0 8px 24px rgba(61,174,43,.4);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .ascii {
+    font-family: 'JetBrains Mono', monospace; white-space: pre;
+    color: var(--primary); font-weight: 700; font-size: 11px;
+    line-height: 1.1; letter-spacing: 1px;
+    text-shadow: 0 0 8px rgba(61,174,43,.4);
+  }
+
+  .copy-icon, .ext-icon, .reset-icon { width: 14px; height: 14px; }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- Header -->
+<header class="border-b border-bg3 sticky top-0 z-10 backdrop-blur-sm" style="background: rgba(10,14,20,.85);">
+  <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <pre class="ascii">▲ etiexpress.demo</pre>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="pill"><span class="dot"></span>5 chips listos para grabar</span>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="border-b border-bg3 py-10">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="mono text-[11px] tracking-widest uppercase primary mb-3">demo · junta 27 mayo 2026</div>
+    <h1 class="text-4xl md:text-5xl text-bright font-semibold mb-3 leading-tight">5 productos. 5 chips. <span class="primary-bright">5 historias.</span></h1>
+    <p class="text-muted-d max-w-2xl text-base">
+      Cada producto con landing propia, datos firmados (simulación SUN/SDM), tap counter y diseño específico por marca.
+      Copia el URL de cada chip y pégalo en la app nfc.writer local para grabar el NTAG 424 DNA.
+    </p>
+
+    <!-- 3-line setup -->
+    <div class="mt-7 grid grid-cols-1 md:grid-cols-3 gap-3 mono text-xs">
+      <div class="card" style="padding: 16px;">
+        <div class="primary mb-1">[01] Servidor web</div>
+        <div class="text-muted-d">Las 5 landings viven aquí — accesibles desde el iPhone vía URL pública.</div>
+      </div>
+      <div class="card" style="padding: 16px;">
+        <div class="cyan mb-1">[02] nfc.writer local</div>
+        <div class="text-muted-d">Arranca con <code class="text-bright">npm start</code> en <code class="text-bright">~/Trabajo/Documentos/nfc-writer</code>.</div>
+      </div>
+      <div class="card" style="padding: 16px;">
+        <div class="yellow mb-1">[03] Grabar cada chip</div>
+        <div class="text-muted-d">Copia el URL aquí, pégalo en la app, apoya el chip, ENTER. Listo.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Products grid -->
+<section class="py-10">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-2xl text-bright font-semibold">Los 5 productos</h2>
+      <span class="mono text-xs text-muted-d">// rankeados por caso de uso</span>
+    </div>
+
+    <div class="space-y-4" id="products"></div>
+  </div>
+</section>
+
+<!-- Cheatsheet quick -->
+<section class="border-t border-bg3 py-10 bg-bg2">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="mono text-[11px] tracking-widest uppercase primary mb-3">cómo correr la demo en junta</div>
+    <h2 class="text-2xl text-bright font-semibold mb-5">Workflow del día</h2>
+    <ol class="space-y-3 text-sm">
+      <li class="flex gap-3"><span class="primary-bright font-bold mono">01.</span><span><strong class="text-bright">Llega 15 minutos antes.</strong> Conecta el ACR1252U a tu Mac. Confirma que la pill verde aparezca en nfc.writer (http://localhost:7402).</span></li>
+      <li class="flex gap-3"><span class="primary-bright font-bold mono">02.</span><span><strong class="text-bright">Graba los 5 chips antes de la junta.</strong> Abre este dashboard, copia cada URL, pégalo en la NFC writer y apoya cada chip etiquetado con su producto.</span></li>
+      <li class="flex gap-3"><span class="primary-bright font-bold mono">03.</span><span><strong class="text-bright">En la junta, presenta de menor a mayor "wow".</strong> Orden sugerido: 1) Patito (familiar), 2) D'Aristi (turístico), 3) Ki'Xocolatl (premio), 4) Yaal-Kaab (impacto social), 5) Mayajal (anti-falso visceral).</span></li>
+      <li class="flex gap-3"><span class="primary-bright font-bold mono">04.</span><span><strong class="text-bright">Para cada uno:</strong> entrega el producto físico al stakeholder, le pides que ponga su iPhone. Banner sale, abre. Tú narras qué está viendo.</span></li>
+      <li class="flex gap-3"><span class="primary-bright font-bold mono">05.</span><span><strong class="text-bright">Cierre:</strong> "Lo que acaban de ver son <em>demos</em>. Producción real cambia: chip 424 DNA + SUN/SDM + backend que firma cada tap. Mismo flujo de UX. Empezamos por uno de los 3 pilotos."</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- Toast -->
+<div id="toast" class="toast">URL copiada al portapapeles ✓</div>
+
+<footer class="border-t border-bg3 py-6">
+  <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs mono text-muted-d">
+    <div>nfc.etiexpress · demo · JP Ponce Gene · Etiexpress / Grupo Vive</div>
+    <div>5 chips · 5 landings · datos demo (no reales)</div>
+  </div>
+</footer>
+
+<script>
+  const BASE_URL = window.location.origin;
+
+  const PRODUCTS = [
+    {
+      slug: "daristi",
+      name: "Casa D'Aristi · Xtabentún",
+      tagline: "Licor premium turístico · anti-falsificación + recompra desde Europa",
+      iconBg: "#c9a35f", iconColor: "#0f1d12", iconChar: "D'A",
+      caseUse: "Anti-falso + storytelling + recompra DTC internacional",
+      sku: "DAR-X-2026-43215",
+      uid: "04A8B2C9F1E380",
+      sig: "A7F2C9B36E1D4892",
+    },
+    {
+      slug: "kixocolatl",
+      name: "Ki'Xocolatl · Tableta 72%",
+      tagline: "Chocolate premium · origen + cosecha + premio AVPA Paris",
+      iconBg: "#3a1f10", iconColor: "#c8932f", iconChar: "Ki'",
+      caseUse: "Traceability árbol → tableta + storytelling de origen",
+      sku: "KIX-T-2026-0427",
+      uid: "04F13C2D8B9000",
+      sig: "9C81B42F5EA17D30",
+    },
+    {
+      slug: "yaalkaab",
+      name: "Yaal-Kaab · Miel Melipona",
+      tagline: "Cooperativa social · anti-adulteración + donación por tap + Slow Food",
+      iconBg: "#d49b1c", iconColor: "#1c2c1f", iconChar: "Y",
+      caseUse: "Caso social + análisis HPLC + caso UNESCO Slow Food",
+      sku: "YAA-M-MAY-26",
+      uid: "047B5E11A2C800",
+      sig: "3D9FE2841B6C5A77",
+    },
+    {
+      slug: "mayajal",
+      name: "Mayajal · Hamaca Tixkokob",
+      tagline: "Artesanía · anti-falso chino + tejedora + horas invertidas",
+      iconBg: "#7a3e2a", iconColor: "#f7efe2", iconChar: "M",
+      caseUse: "Artesanía + denominación origen + caso visceral anti-China",
+      sku: "HAM-TIX-2026-7821",
+      uid: "043CF288DE7100",
+      sig: "5EA01C9743B28FE1",
+    },
+    {
+      slug: "patito",
+      name: "Patito · Lager Yucateca",
+      tagline: "Craft beer · loyalty 8 estilos + Untappd + analytics off-trade",
+      iconBg: "#f5c518", iconColor: "#0d0d0d", iconChar: "P",
+      caseUse: "FMCG + gamification + control de canal de distribución",
+      sku: "PAT-LAGER-26-04-15-15A04",
+      uid: "04B8E51A7C0080",
+      sig: "2CD9A5F4817B6E33",
+    },
+  ];
+
+  function buildUrl(p) {
+    return BASE_URL + "/p/" + p.slug + ".html?uid=" + p.uid + "&c=001&sig=" + p.sig;
+  }
+
+  function fmtBytes(hex) {
+    return hex.match(/.{1,2}/g).join(":").toUpperCase();
+  }
+
+  function el(tag, opts) {
+    const e = document.createElement(tag);
+    if (opts) {
+      if (opts.cls) e.className = opts.cls;
+      if (opts.text) e.textContent = opts.text;
+      if (opts.html != null) e.innerHTML = opts.html; // only used for trusted static SVG strings below
+      if (opts.attrs) Object.keys(opts.attrs).forEach(k => e.setAttribute(k, opts.attrs[k]));
+      if (opts.style) e.style.cssText = opts.style;
+      if (opts.children) opts.children.forEach(c => e.appendChild(c));
+    }
+    return e;
+  }
+
+  // Static SVG snippets — these are author-controlled and not from user input
+  const SVG_COPY = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+  const SVG_EXT = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>';
+  const SVG_RESET = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>';
+
+  function buildCard(p, i) {
+    const card = el("div", { cls: "card pl-7" });
+    card.appendChild(el("div", { cls: "card-accent" }));
+
+    // Top row: icon + headline
+    const top = el("div", { cls: "flex flex-col md:flex-row md:items-center gap-5" });
+    const icon = el("div", { cls: "product-icon", text: p.iconChar });
+    icon.style.background = p.iconBg;
+    icon.style.color = p.iconColor;
+    top.appendChild(icon);
+
+    const headline = el("div", { cls: "flex-1 min-w-0" });
+    const tag = el("div", { cls: "flex items-center gap-2 mb-1" });
+    tag.appendChild(el("span", { cls: "mono text-[10px] tracking-widest uppercase text-muted-d", text: "#" + (i + 1) }));
+    tag.appendChild(el("span", { cls: "mono text-[10px] tracking-widest uppercase primary", text: p.caseUse }));
+    headline.appendChild(tag);
+    headline.appendChild(el("h3", { cls: "text-xl text-bright font-semibold leading-tight", text: p.name }));
+    headline.appendChild(el("p", { cls: "text-sm text-muted-d mt-1", text: p.tagline }));
+    top.appendChild(headline);
+    card.appendChild(top);
+
+    // Meta grid
+    const meta = el("div", { cls: "mt-5 grid grid-cols-2 md:grid-cols-3 gap-3 text-xs mono" });
+    const metaItems = [
+      ["sku", p.sku],
+      ["chip uid", fmtBytes(p.uid)],
+      ["sig", fmtBytes(p.sig)],
+    ];
+    metaItems.forEach(([k, v]) => {
+      const item = el("div");
+      item.appendChild(el("div", { cls: "text-muted-d", text: k }));
+      item.appendChild(el("div", { cls: "text-bright", text: v }));
+      meta.appendChild(item);
+    });
+    card.appendChild(meta);
+
+    // URL block
+    const urlBlock = el("div", { cls: "mt-5" });
+    urlBlock.appendChild(el("div", { cls: "mono text-[10px] tracking-widest uppercase text-muted-d mb-2", text: "// URL para grabar al chip" }));
+    const urlBox = el("div", { cls: "url-box", text: buildUrl(p) });
+    urlBox.id = "url-" + p.slug;
+    urlBlock.appendChild(urlBox);
+    card.appendChild(urlBlock);
+
+    // Buttons
+    const btnRow = el("div", { cls: "mt-4 flex flex-wrap gap-2" });
+    const btnCopy = el("button", { cls: "btn btn-primary", html: SVG_COPY });
+    btnCopy.appendChild(document.createTextNode(" Copiar URL para chip"));
+    btnCopy.addEventListener("click", () => copyUrl(p.slug));
+    btnRow.appendChild(btnCopy);
+
+    const btnView = el("a", { cls: "btn btn-outline", html: SVG_EXT, attrs: { href: "/p/" + p.slug + ".html?uid=" + p.uid + "&c=001&sig=" + p.sig, target: "_blank", rel: "noopener" } });
+    btnView.appendChild(document.createTextNode(" Ver landing"));
+    btnRow.appendChild(btnView);
+
+    const btnReset = el("button", { cls: "btn btn-ghost", html: SVG_RESET });
+    btnReset.appendChild(document.createTextNode(" Reset contador"));
+    btnReset.addEventListener("click", () => resetTaps(p.slug, p.uid));
+    btnRow.appendChild(btnReset);
+
+    card.appendChild(btnRow);
+    return card;
+  }
+
+  const container = document.getElementById("products");
+  PRODUCTS.forEach((p, i) => container.appendChild(buildCard(p, i)));
+
+  function copyUrl(slug) {
+    const text = document.getElementById("url-" + slug).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const t = document.getElementById("toast");
+      t.textContent = "URL copiada ✓  Pega en nfc.writer y graba el chip.";
+      t.classList.add("show");
+      setTimeout(() => t.classList.remove("show"), 2400);
+    });
+  }
+
+  function resetTaps(slug, uid) {
+    localStorage.removeItem(slug + "-taps-" + uid);
+    const t = document.getElementById("toast");
+    t.textContent = "Contador de taps reseteado para " + slug;
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 2400);
+  }
+</script>
+</body>
+</html>

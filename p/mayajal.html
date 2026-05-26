@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Mayajal · Hamaca Auténtica de Tixkokob</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#7a3e2a" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --bg: #f7efe2;
+    --bg-2: #ece1cb;
+    --fg: #2b1f15;
+    --muted: #6e5a47;
+    --terra: #b85042;
+    --terra-dark: #7a3e2a;
+    --sage: #5b7a4b;
+  }
+  html, body { background: var(--bg); color: var(--fg); font-family: 'Inter', sans-serif; }
+  .serif { font-family: 'Playfair Display', serif; }
+  .terra { color: var(--terra); }
+  .terra-dark { color: var(--terra-dark); }
+  .sage { color: var(--sage); }
+  .bg-terra { background: var(--terra); color: var(--bg); }
+  .bg-terra-dark { background: var(--terra-dark); color: var(--bg); }
+  .bg-bg2 { background: var(--bg-2); }
+  .text-muted-h { color: var(--muted); }
+
+  .verify-overlay { position: fixed; inset: 0; background: var(--terra-dark); z-index: 50;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    transition: opacity .5s ease; color: var(--bg); }
+  .verify-overlay.done { opacity: 0; pointer-events: none; }
+  .spinner { width: 56px; height: 56px; border-radius: 50%;
+    border: 3px solid rgba(247,239,226,.15); border-top-color: var(--bg);
+    animation: spin .9s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .check { width: 64px; height: 64px; border-radius: 50%;
+    background: var(--bg); display: none; align-items: center; justify-content: center;
+    animation: pop .5s cubic-bezier(.22,1.36,.36,1) forwards; }
+  .check.show { display: flex; }
+  .check svg { stroke: var(--terra-dark); }
+  @keyframes pop { from { transform: scale(.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+  .fade-in { animation: fadein .8s ease both; }
+  .fade-in.delay-1 { animation-delay: .1s; }
+  .fade-in.delay-2 { animation-delay: .25s; }
+  .fade-in.delay-3 { animation-delay: .4s; }
+  .fade-in.delay-4 { animation-delay: .6s; }
+  @keyframes fadein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .weave-bg {
+    background:
+      repeating-linear-gradient(45deg, rgba(184,80,66,.06) 0 4px, transparent 4px 8px),
+      repeating-linear-gradient(-45deg, rgba(184,80,66,.06) 0 4px, transparent 4px 8px),
+      var(--bg-2);
+  }
+
+  .stamp-circle {
+    width: 90px; height: 90px;
+    border: 3px solid var(--terra-dark);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; padding: 6px;
+    transform: rotate(-6deg);
+    background: var(--bg);
+  }
+
+  /* Hamaca SVG-like */
+  .hamaca { display: flex; flex-direction: column; gap: 2px; height: 80px; }
+  .hamaca div { flex: 1; }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- Verify overlay -->
+<div id="verify" class="verify-overlay">
+  <div id="spin" class="spinner"></div>
+  <div id="check" class="check">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <div id="verify-text" class="mt-6 text-sm tracking-wider uppercase opacity-70">Verificando origen y artesana…</div>
+  <div id="verify-uid" class="mt-2 text-xs font-mono opacity-50"></div>
+</div>
+
+<!-- Header -->
+<header class="bg-terra-dark border-b" style="border-color: rgba(247,239,226,.15);">
+  <div class="max-w-3xl mx-auto px-5 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded flex items-center justify-center serif font-bold" style="background: var(--bg); color: var(--terra-dark);">M</div>
+      <div>
+        <div class="serif text-bg text-lg leading-none">Mayajal</div>
+        <div class="text-[10px] tracking-widest uppercase" style="color: rgba(247,239,226,.55);">hamacas de tixkokob · yucatán</div>
+      </div>
+    </div>
+    <span class="inline-flex items-center gap-2 text-xs px-3 py-1.5 rounded-full" style="background: rgba(247,239,226,.1); color: var(--bg);">
+      <span class="w-1.5 h-1.5 rounded-full inline-block" style="background: var(--bg); animation: pulse 1.8s infinite;"></span>
+      Auténtica
+    </span>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="weave-bg py-12 fade-in">
+  <div class="max-w-3xl mx-auto px-5">
+    <div class="text-[11px] tracking-[.3em] uppercase text-muted-h mb-4">hamaca yucateca · tejido tradicional</div>
+    <h1 class="serif text-5xl md:text-6xl leading-[1.05] mb-5">
+      Esta hamaca <em class="terra-dark">no se hizo en China</em>.
+    </h1>
+    <p class="text-muted-h text-lg max-w-2xl">
+      Se hizo a mano, en Tixkokob, durante 87 horas. Tiene un nombre y una historia.
+      Y este chip lo prueba criptográficamente.
+    </p>
+    <div class="flex flex-wrap items-center gap-3 mt-6">
+      <span class="text-xs tracking-wider px-3 py-1.5 rounded-full bg-terra-dark">Pieza · HAM-TIX-2026-7821</span>
+      <span class="text-xs tracking-wider px-3 py-1.5 rounded-full" style="background: var(--bg-2); color: var(--terra-dark);">Tixkokob, Yucatán</span>
+    </div>
+  </div>
+</section>
+
+<!-- Tejedora card -->
+<section class="max-w-3xl mx-auto px-5 -mt-2 mb-10 fade-in delay-1">
+  <div class="rounded-2xl overflow-hidden border-2 border-terra-dark bg-white">
+    <div class="bg-terra-dark px-6 py-3 text-bg flex items-center gap-2">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span class="text-[10px] tracking-widest uppercase font-semibold">la artesana</span>
+    </div>
+    <div class="p-6">
+      <div class="flex items-start gap-5">
+        <div class="w-20 h-20 rounded-full bg-terra flex items-center justify-center serif text-3xl flex-shrink-0" style="color: var(--bg);">C</div>
+        <div class="flex-1">
+          <div class="serif text-3xl mb-1 terra-dark">Doña Conchita Uc Pat</div>
+          <div class="text-muted-h mb-3">Tejedora de hamacas · 41 años de oficio</div>
+          <div class="text-sm leading-relaxed">
+            Conchita aprendió el oficio de su madre, en Tixkokob, cuando tenía 9 años.
+            Hoy enseña a sus dos hijas. Esta hamaca es la pieza #84 que teje este año —
+            le toma entre 80 y 100 horas cada una, dependiendo de la complejidad del bordado.
+          </div>
+          <div class="mt-4 grid grid-cols-3 gap-3 text-xs">
+            <div class="rounded-lg p-3 bg-bg2">
+              <div class="text-muted-h mb-1">horas tejido</div>
+              <div class="font-mono terra-dark text-base font-semibold">87 h</div>
+            </div>
+            <div class="rounded-lg p-3 bg-bg2">
+              <div class="text-muted-h mb-1">terminada</div>
+              <div class="font-mono terra-dark text-base font-semibold">21 may 2026</div>
+            </div>
+            <div class="rounded-lg p-3 bg-bg2">
+              <div class="text-muted-h mb-1">municipio</div>
+              <div class="font-mono terra-dark text-base font-semibold">Tixkokob</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Ficha técnica -->
+<section class="max-w-3xl mx-auto px-5 mb-10 fade-in delay-2">
+  <div class="text-[11px] tracking-[.3em] uppercase text-muted-h mb-3">tu hamaca</div>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+    <div class="rounded-xl p-4 bg-bg2">
+      <div class="text-[10px] tracking-widest uppercase text-muted-h mb-1">tamaño</div>
+      <div class="serif text-xl terra-dark">Matrimonial</div>
+    </div>
+    <div class="rounded-xl p-4 bg-bg2">
+      <div class="text-[10px] tracking-widest uppercase text-muted-h mb-1">hilos</div>
+      <div class="serif text-xl terra-dark">Algodón egipcio</div>
+    </div>
+    <div class="rounded-xl p-4 bg-bg2">
+      <div class="text-[10px] tracking-widest uppercase text-muted-h mb-1">capacidad</div>
+      <div class="serif text-xl terra-dark">2 personas</div>
+    </div>
+    <div class="rounded-xl p-4 bg-bg2">
+      <div class="text-[10px] tracking-widest uppercase text-muted-h mb-1">peso máx.</div>
+      <div class="serif text-xl terra-dark">220 kg</div>
+    </div>
+  </div>
+</section>
+
+<!-- Hamaca visual -->
+<section class="max-w-3xl mx-auto px-5 mb-10 fade-in delay-2">
+  <div class="rounded-2xl bg-terra-dark p-6 text-bg">
+    <div class="text-[10px] tracking-widest uppercase opacity-60 mb-3">tejido auténtico (no telar)</div>
+    <div class="hamaca">
+      <div style="background: linear-gradient(90deg, #b85042 0 5%, #ece1cb 5% 12%, #b85042 12% 18%, #ece1cb 18% 30%, #b85042 30% 38%, #ece1cb 38% 50%, #b85042 50% 56%, #ece1cb 56% 65%, #b85042 65% 75%, #ece1cb 75% 82%, #b85042 82% 92%, #ece1cb 92% 100%);"></div>
+      <div style="background: linear-gradient(90deg, #ece1cb 0 6%, #b85042 6% 14%, #ece1cb 14% 22%, #b85042 22% 28%, #ece1cb 28% 40%, #b85042 40% 48%, #ece1cb 48% 55%, #b85042 55% 65%, #ece1cb 65% 72%, #b85042 72% 80%, #ece1cb 80% 88%, #b85042 88% 100%);"></div>
+      <div style="background: linear-gradient(90deg, #b85042 0 4%, #ece1cb 4% 13%, #b85042 13% 22%, #ece1cb 22% 32%, #b85042 32% 42%, #ece1cb 42% 50%, #b85042 50% 60%, #ece1cb 60% 70%, #b85042 70% 80%, #ece1cb 80% 90%, #b85042 90% 100%);"></div>
+      <div style="background: linear-gradient(90deg, #ece1cb 0 8%, #b85042 8% 18%, #ece1cb 18% 28%, #b85042 28% 38%, #ece1cb 38% 50%, #b85042 50% 60%, #ece1cb 60% 70%, #b85042 70% 80%, #ece1cb 80% 90%, #b85042 90% 100%);"></div>
+      <div style="background: linear-gradient(90deg, #b85042 0 6%, #ece1cb 6% 16%, #b85042 16% 26%, #ece1cb 26% 36%, #b85042 36% 46%, #ece1cb 46% 56%, #b85042 56% 66%, #ece1cb 66% 76%, #b85042 76% 86%, #ece1cb 86% 100%);"></div>
+    </div>
+    <div class="mt-4 text-sm opacity-80">
+      El tejido auténtico de Tixkokob tiene irregularidades naturales y nudos por debajo
+      hechos a mano. El telar chino de 2 brazos produce un patrón mecánico, perfecto y duro.
+    </div>
+  </div>
+</section>
+
+<!-- Anti-falsificación: cómo verificarla manualmente -->
+<section class="max-w-3xl mx-auto px-5 mb-10 fade-in delay-3">
+  <div class="rounded-2xl bg-bg2 p-6 md:p-8">
+    <div class="text-[11px] tracking-[.3em] uppercase text-muted-h mb-3">cómo identificarla</div>
+    <h2 class="serif text-3xl terra-dark mb-5">3 señales de hamaca yucateca real</h2>
+    <div class="space-y-4">
+      <div class="flex items-start gap-4">
+        <div class="w-8 h-8 rounded-full bg-terra-dark flex items-center justify-center text-bg serif font-bold flex-shrink-0">1</div>
+        <div>
+          <div class="font-semibold mb-1">Nudo de hilo cada 1.5 cm</div>
+          <div class="text-sm text-muted-h">Si pasas el dedo por el envés, sientes los nudos a intervalos. El telar chino tiene el tejido completamente liso del otro lado.</div>
+        </div>
+      </div>
+      <div class="flex items-start gap-4">
+        <div class="w-8 h-8 rounded-full bg-terra-dark flex items-center justify-center text-bg serif font-bold flex-shrink-0">2</div>
+        <div>
+          <div class="font-semibold mb-1">Hilos asimétricos en los extremos</div>
+          <div class="text-sm text-muted-h">Los brazos (extremos) tienen entre 350 y 450 hilos. Nunca son exactamente el mismo número porque se tejen a mano.</div>
+        </div>
+      </div>
+      <div class="flex items-start gap-4">
+        <div class="w-8 h-8 rounded-full bg-terra-dark flex items-center justify-center text-bg serif font-bold flex-shrink-0">3</div>
+        <div>
+          <div class="font-semibold mb-1">Chip NFC con firma criptográfica</div>
+          <div class="text-sm text-muted-h">Este chip que acabas de tapear. Si la firma no valida, la hamaca no es nuestra. Punto.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tap counter + sello -->
+<section class="max-w-3xl mx-auto px-5 mb-10 fade-in delay-3">
+  <div class="rounded-2xl p-5 border-2 border-terra-dark flex items-center gap-5">
+    <div class="stamp-circle flex-shrink-0">
+      <div class="text-[8px] tracking-widest uppercase text-muted-h">indicación</div>
+      <div class="serif text-base terra-dark leading-tight">IG en gestión</div>
+      <div class="text-[8px] tracking-widest uppercase text-muted-h mt-1">IMPI 2024+</div>
+    </div>
+    <div class="flex-1">
+      <div class="text-[10px] tracking-widest uppercase text-muted-h mb-1">Activación de esta hamaca</div>
+      <div class="serif text-2xl">Tap <span id="tap-counter" class="terra-dark font-semibold">#1</span></div>
+      <div id="tap-narrative" class="text-sm text-muted-h mt-1">Acabas de activar el chip de Doña Conchita.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Cuidado -->
+<section class="bg-terra-dark text-bg py-12 fade-in delay-4">
+  <div class="max-w-3xl mx-auto px-5">
+    <div class="text-[11px] tracking-[.3em] uppercase opacity-60 mb-3">cuidado de tu hamaca</div>
+    <h2 class="serif text-3xl mb-6">Si la cuidas, dura 30 años.</h2>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div>
+        <div class="serif text-2xl mb-2">Lavado</div>
+        <div class="text-sm opacity-80">A mano, agua fría, jabón neutro. Nunca lavadora ni secadora.</div>
+      </div>
+      <div>
+        <div class="serif text-2xl mb-2">Sol</div>
+        <div class="text-sm opacity-80">Evitar exposición directa todo el día — el algodón se decolora.</div>
+      </div>
+      <div>
+        <div class="serif text-2xl mb-2">Almacenamiento</div>
+        <div class="text-sm opacity-80">Doblada, en lugar seco, sin humedad. Una pasada de plancha tibia.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="max-w-3xl mx-auto px-5 py-10 fade-in delay-4">
+  <div class="rounded-2xl border-2 border-terra-dark p-6 md:p-8">
+    <h2 class="serif text-3xl terra-dark mb-3">¿Quieres conocer el taller?</h2>
+    <p class="text-sm text-muted-h mb-5">Tixkokob abre las puertas del taller de Conchita. Tour, café, demostración del telar. Reserva con 48 h de anticipación.</p>
+    <a href="#" class="inline-block bg-terra-dark px-6 py-3 rounded-lg font-medium text-bg">Visitar taller →</a>
+    <a href="#" class="ml-2 inline-block px-6 py-3 rounded-lg font-medium border-2 border-terra-dark terra-dark">Comprar otra hamaca</a>
+  </div>
+</section>
+
+<!-- Signature -->
+<section class="border-t py-6" style="border-color: var(--bg-2);">
+  <div class="max-w-3xl mx-auto px-5">
+    <details class="group">
+      <summary class="text-xs tracking-widest uppercase text-muted-h cursor-pointer flex items-center gap-2 hover:terra-dark">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="group-open:rotate-90 transition-transform"><polyline points="9 18 15 12 9 6"/></svg>
+        Detalles de la firma criptográfica
+      </summary>
+      <div class="mt-4 grid grid-cols-2 gap-3 text-[11px] font-mono terra-dark">
+        <div><div class="text-muted-h">chip uid</div><div id="uid-display">04:3C:F2:88:DE:71:00</div></div>
+        <div><div class="text-muted-h">read counter</div><div id="counter-display">001</div></div>
+        <div class="col-span-2"><div class="text-muted-h">cmac signature</div><div class="break-all">5E:A0:1C:97:43:B2:8F:E1</div></div>
+        <div class="col-span-2"><div class="text-muted-h">chip</div><div>NXP NTAG 424 DNA · AES-128 · firmado por Mayajal</div></div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<footer class="border-t py-6" style="border-color: var(--bg-2);">
+  <div class="max-w-3xl mx-auto px-5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-muted-h">
+    <div>Mayajal · Tixkokob, Yucatán · Hamacas auténticas</div>
+    <div>Etiqueta NFC por <span class="terra-dark font-semibold">Etiexpress</span> · Grupo Vive</div>
+  </div>
+</footer>
+
+<script>
+  const params = new URLSearchParams(location.search);
+  const uid = params.get("uid") || "043CF288DE7100";
+  const storageKey = "mayajal-taps-" + uid;
+  let count = parseInt(localStorage.getItem(storageKey) || "0", 10) + 1;
+  localStorage.setItem(storageKey, String(count));
+
+  document.getElementById("tap-counter").textContent = "#" + count;
+  document.getElementById("counter-display").textContent = String(count).padStart(3, "0");
+
+  const uidFormatted = uid.match(/.{1,2}/g).join(":").toUpperCase();
+  document.getElementById("uid-display").textContent = uidFormatted;
+  document.getElementById("verify-uid").textContent = "UID " + uidFormatted;
+
+  const narr = document.getElementById("tap-narrative");
+  if (count === 1) narr.textContent = "Acabas de activar el chip de Doña Conchita.";
+  else if (count < 5) narr.textContent = "Has activado esta hamaca " + count + " veces.";
+  else narr.textContent = "Eres parte de la tradición de Tixkokob. " + count + " activaciones.";
+
+  setTimeout(() => {
+    document.getElementById("spin").style.display = "none";
+    document.getElementById("check").classList.add("show");
+    document.getElementById("verify-text").textContent = "Hamaca yucateca legítima · Tixkokob, Yucatán";
+    document.getElementById("verify-text").style.color = "#f7efe2";
+  }, 1500);
+  setTimeout(() => { document.getElementById("verify").classList.add("done"); }, 2500);
+</script>
+</body>
+</html>

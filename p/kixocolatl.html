@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Ki'Xocolatl · Tableta 72% Plantación Ticul</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#3a1f10" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --bg: #faf3e7;
+    --bg-2: #f3e8d3;
+    --fg: #2b1a0d;
+    --muted: #6b4f3a;
+    --cacao: #3a1f10;
+    --gold: #c8932f;
+    --cream: #fff8eb;
+  }
+  html, body { background: var(--bg); color: var(--fg); font-family: 'Inter', sans-serif; }
+  .serif { font-family: 'Fraunces', serif; }
+  .cacao { color: var(--cacao); }
+  .gold { color: var(--gold); }
+  .bg-cacao { background: var(--cacao); color: var(--cream); }
+  .bg-cream { background: var(--cream); }
+  .border-cacao { border-color: var(--cacao); }
+  .text-muted-c { color: var(--muted); }
+
+  .verify-overlay { position: fixed; inset: 0; background: var(--cacao); z-index: 50;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    transition: opacity .5s ease; color: var(--cream); }
+  .verify-overlay.done { opacity: 0; pointer-events: none; }
+  .spinner { width: 56px; height: 56px; border-radius: 50%;
+    border: 3px solid rgba(255,248,235,.15); border-top-color: var(--gold);
+    animation: spin .9s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .check { width: 64px; height: 64px; border-radius: 50%;
+    background: var(--gold); display: none; align-items: center; justify-content: center;
+    animation: pop .5s cubic-bezier(.22,1.36,.36,1) forwards; }
+  .check.show { display: flex; }
+  .check svg { stroke: var(--cacao); }
+  @keyframes pop { from { transform: scale(.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+  .fade-in { animation: fadein .8s ease both; }
+  .fade-in.delay-1 { animation-delay: .1s; }
+  .fade-in.delay-2 { animation-delay: .25s; }
+  .fade-in.delay-3 { animation-delay: .4s; }
+  .fade-in.delay-4 { animation-delay: .6s; }
+  @keyframes fadein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .stamp {
+    display: inline-block;
+    border: 2px solid var(--gold); border-radius: 50%;
+    color: var(--gold); padding: 12px 14px; text-align: center;
+    transform: rotate(-8deg); position: relative;
+    font-family: 'Fraunces', serif;
+  }
+
+  .map-bg { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 250'><defs><pattern id='hex' width='30' height='34.64' patternUnits='userSpaceOnUse'><polygon points='15,2 28,9 28,25 15,32 2,25 2,9' fill='none' stroke='%23c8932f' stroke-width='.4' opacity='.2'/></pattern></defs><rect width='400' height='250' fill='%23f3e8d3'/><rect width='400' height='250' fill='url(%23hex)'/></svg>") center / cover; }
+
+  .leaf {
+    width: 60px; height: 60px;
+    background: radial-gradient(circle at 35% 40%, var(--gold), var(--cacao));
+    border-radius: 50% 0 50% 50%;
+    transform: rotate(-30deg);
+  }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- Verify overlay -->
+<div id="verify" class="verify-overlay">
+  <div id="spin" class="spinner"></div>
+  <div id="check" class="check">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <div id="verify-text" class="mt-6 text-sm tracking-wider uppercase opacity-70">Verificando origen del cacao…</div>
+  <div id="verify-uid" class="mt-2 text-xs font-mono opacity-50"></div>
+</div>
+
+<!-- Header -->
+<header class="bg-cacao border-b" style="border-color: rgba(200,147,47,.2);">
+  <div class="max-w-3xl mx-auto px-5 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded bg-cream flex items-center justify-center serif text-cacao font-bold">Ki'</div>
+      <div>
+        <div class="serif text-cream text-lg leading-none">Ki'XOCOLATL</div>
+        <div class="text-[10px] tracking-widest uppercase" style="color: rgba(255,248,235,.5);">cacao criollo · plantación ticul</div>
+      </div>
+    </div>
+    <span class="inline-flex items-center gap-2 text-xs px-3 py-1.5 rounded-full" style="background: rgba(200,147,47,.18); color: var(--gold);">
+      <span class="w-1.5 h-1.5 rounded-full bg-gold inline-block" style="background: var(--gold); animation: pulse 1.8s infinite;"></span>
+      Verificado
+    </span>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="map-bg py-12 fade-in">
+  <div class="max-w-3xl mx-auto px-5">
+    <div class="text-[11px] tracking-[.3em] uppercase text-muted-c mb-4">Tableta 72% Cacao</div>
+    <h1 class="serif text-5xl md:text-6xl font-medium leading-[1.05] mb-5">
+      Esta tableta nació en <em class="gold not-italic">Ticul</em>.<br/>
+      Y este es su árbol.
+    </h1>
+    <div class="flex flex-wrap items-center gap-3 mt-6">
+      <span class="text-xs tracking-wider px-3 py-1.5 rounded-full bg-cacao text-cream">Lote · KIX-T-2026-0427</span>
+      <span class="text-xs tracking-wider px-3 py-1.5 rounded-full" style="background: var(--bg-2); color: var(--cacao);">Tostado · 3 abr 2026</span>
+      <span class="text-xs tracking-wider px-3 py-1.5 rounded-full" style="background: var(--bg-2); color: var(--cacao);">Cacao criollo 100%</span>
+    </div>
+  </div>
+</section>
+
+<!-- Tree card -->
+<section class="max-w-3xl mx-auto px-5 -mt-2 mb-10 fade-in delay-1">
+  <div class="rounded-2xl overflow-hidden border-2 border-cacao bg-cream">
+    <div class="bg-cacao px-6 py-3 text-cream flex items-center gap-2">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-4 14.93V22h8v-5.07A8 8 0 0 0 12 2z"/><line x1="12" y1="10" x2="12" y2="22"/></svg>
+      <span class="text-[10px] tracking-widest uppercase">tu árbol</span>
+    </div>
+    <div class="p-6">
+      <div class="flex items-start gap-5">
+        <div class="leaf flex-shrink-0"></div>
+        <div>
+          <div class="serif text-3xl mb-1 cacao">Árbol #T-427</div>
+          <div class="text-muted-c mb-3">Plantado en 2014 · cosecha #14 en 2026</div>
+          <div class="text-sm leading-relaxed cacao">
+            Este árbol vive en la parcela 7 de la plantación de Ticul. Lo cuida
+            <strong>Don Andrés Cab</strong>, agricultor maya de cuarta generación.
+            Su cosecha de marzo 2026 fue de 4.2 kg de cacao en grano fresco —
+            suficiente para 47 tabletas de 70 g.
+          </div>
+          <div class="mt-4 grid grid-cols-3 gap-3 text-xs">
+            <div class="bg-bg2 rounded-lg p-3" style="background: var(--bg-2);">
+              <div class="text-muted-c mb-1">latitud</div>
+              <div class="font-mono cacao">20.397° N</div>
+            </div>
+            <div class="bg-bg2 rounded-lg p-3" style="background: var(--bg-2);">
+              <div class="text-muted-c mb-1">longitud</div>
+              <div class="font-mono cacao">89.535° W</div>
+            </div>
+            <div class="bg-bg2 rounded-lg p-3" style="background: var(--bg-2);">
+              <div class="text-muted-c mb-1">parcela</div>
+              <div class="font-mono cacao">P-07</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Premio AVPA stamp -->
+<section class="max-w-3xl mx-auto px-5 mb-10 fade-in delay-2">
+  <div class="rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center gap-6" style="background: linear-gradient(135deg, rgba(200,147,47,.12), transparent);">
+    <div class="stamp">
+      <div class="text-[9px] tracking-widest uppercase">Médaille d'Or</div>
+      <div class="serif text-2xl leading-none mt-1">AVPA</div>
+      <div class="text-[9px] tracking-widest uppercase mt-1">Paris 2021</div>
+    </div>
+    <div class="flex-1">
+      <div class="text-[10px] tracking-widest uppercase text-muted-c mb-1">Reconocimiento internacional</div>
+      <h2 class="serif text-2xl cacao mb-2">Mejor chocolate de origen del mundo</h2>
+      <p class="text-sm text-muted-c">
+        Ki'Xocolatl ganó la medalla de oro de la Agence pour la Valorisation des Produits
+        Agricoles en París 2021. Categoría: Chocolats Elaborés au Origine. Es uno de los 4
+        chocolates mexicanos reconocidos a este nivel.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Tap counter -->
+<section class="max-w-3xl mx-auto px-5 mb-10 fade-in delay-2">
+  <div class="rounded-2xl p-5 bg-cacao text-cream flex items-center justify-between">
+    <div>
+      <div class="text-[10px] tracking-widest uppercase opacity-50 mb-1">Activación de esta tableta</div>
+      <div class="serif text-2xl">Tap <span id="tap-counter" class="gold font-semibold">#1</span></div>
+      <div id="tap-narrative" class="text-sm opacity-80 mt-1">Es la primera vez que se activa este chip.</div>
+    </div>
+    <div class="w-14 h-14 rounded-full bg-gold flex items-center justify-center cacao">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- Plantación: 120,000 árboles -->
+<section class="bg-cacao text-cream py-12 fade-in delay-3">
+  <div class="max-w-3xl mx-auto px-5">
+    <div class="text-[11px] tracking-[.3em] uppercase opacity-60 mb-3">la plantación</div>
+    <h2 class="serif text-3xl mb-6">120,000 árboles. Cero atajos.</h2>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div>
+        <div class="serif text-4xl gold mb-1">600</div>
+        <div class="text-sm opacity-80">hectáreas cultivadas en Ticul</div>
+      </div>
+      <div>
+        <div class="serif text-4xl gold mb-1">200t</div>
+        <div class="text-sm opacity-80">de cacao criollo al año</div>
+      </div>
+      <div>
+        <div class="serif text-4xl gold mb-1">14</div>
+        <div class="text-sm opacity-80">años protegiendo la variedad criolla yucateca</div>
+      </div>
+    </div>
+    <p class="mt-7 text-sm opacity-80 leading-relaxed">
+      Mathieu Brees, maestro chocolatero belga, replantó la variedad criolla maya en Yucatán
+      cuando estaba a punto de desaparecer. Cada tableta Ki'Xocolatl es trazable hasta un árbol específico.
+    </p>
+  </div>
+</section>
+
+<!-- Ficha técnica -->
+<section class="max-w-3xl mx-auto px-5 py-10 fade-in delay-4">
+  <div class="text-[11px] tracking-[.3em] uppercase text-muted-c mb-3">ficha técnica</div>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="rounded-xl p-4 border-2" style="border-color: var(--cacao);">
+      <div class="text-[10px] tracking-widest uppercase text-muted-c mb-1">% cacao</div>
+      <div class="serif text-2xl cacao">72%</div>
+    </div>
+    <div class="rounded-xl p-4 border-2" style="border-color: var(--cacao);">
+      <div class="text-[10px] tracking-widest uppercase text-muted-c mb-1">peso</div>
+      <div class="serif text-2xl cacao">70 g</div>
+    </div>
+    <div class="rounded-xl p-4 border-2" style="border-color: var(--cacao);">
+      <div class="text-[10px] tracking-widest uppercase text-muted-c mb-1">notas</div>
+      <div class="serif text-lg cacao">cítricas · cardamomo</div>
+    </div>
+    <div class="rounded-xl p-4 border-2" style="border-color: var(--cacao);">
+      <div class="text-[10px] tracking-widest uppercase text-muted-c mb-1">caducidad</div>
+      <div class="serif text-lg cacao">abr · 2027</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="max-w-3xl mx-auto px-5 pb-12 fade-in delay-4">
+  <div class="rounded-2xl bg-cacao text-cream p-6 md:p-8">
+    <h2 class="serif text-3xl mb-3">Sigue la ruta del cacao maya</h2>
+    <p class="text-sm opacity-80 mb-5 max-w-xl">
+      Reserva tu visita a la plantación de Ticul, conoce a los productores y vive la
+      ceremonia ancestral del cacao.
+    </p>
+    <a href="#" class="inline-block px-6 py-3 rounded-lg font-medium" style="background: var(--gold); color: var(--cacao);">Comprar más tabletas →</a>
+    <a href="#" class="ml-2 inline-block px-6 py-3 rounded-lg font-medium border" style="border-color: rgba(200,147,47,.4); color: var(--gold);">Visitar plantación</a>
+  </div>
+</section>
+
+<!-- Signature -->
+<section class="border-t py-6" style="border-color: var(--bg-2);">
+  <div class="max-w-3xl mx-auto px-5">
+    <details class="group">
+      <summary class="text-xs tracking-widest uppercase text-muted-c cursor-pointer flex items-center gap-2 hover:cacao">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="group-open:rotate-90 transition-transform"><polyline points="9 18 15 12 9 6"/></svg>
+        Detalles de la firma criptográfica
+      </summary>
+      <div class="mt-4 grid grid-cols-2 gap-3 text-[11px] font-mono cacao">
+        <div><div class="text-muted-c">chip uid</div><div id="uid-display">04:F1:3C:2D:8B:90:00</div></div>
+        <div><div class="text-muted-c">read counter</div><div id="counter-display">001</div></div>
+        <div class="col-span-2"><div class="text-muted-c">cmac signature</div><div class="break-all">9C:81:B4:2F:5E:A1:7D:30</div></div>
+        <div class="col-span-2"><div class="text-muted-c">chip</div><div>NXP NTAG 424 DNA · AES-128 · firmado por Ki'Xocolatl</div></div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<footer class="border-t py-6" style="border-color: var(--bg-2);">
+  <div class="max-w-3xl mx-auto px-5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-muted-c">
+    <div>L'Amandine S.A. de C.V. · Plantación Ticul, Yucatán</div>
+    <div>Etiqueta NFC por <span class="gold font-semibold">Etiexpress</span> · Grupo Vive</div>
+  </div>
+</footer>
+
+<script>
+  const params = new URLSearchParams(location.search);
+  const uid = params.get("uid") || "04F13C2D8B9000";
+  const storageKey = "kixocolatl-taps-" + uid;
+  let count = parseInt(localStorage.getItem(storageKey) || "0", 10) + 1;
+  localStorage.setItem(storageKey, String(count));
+
+  document.getElementById("tap-counter").textContent = "#" + count;
+  document.getElementById("counter-display").textContent = String(count).padStart(3, "0");
+
+  const uidFormatted = uid.match(/.{1,2}/g).join(":").toUpperCase();
+  document.getElementById("uid-display").textContent = uidFormatted;
+  document.getElementById("verify-uid").textContent = "UID " + uidFormatted;
+
+  const narr = document.getElementById("tap-narrative");
+  if (count === 1) narr.textContent = "Es la primera vez que se activa este chip.";
+  else if (count < 5) narr.textContent = "Has activado esta tableta " + count + " veces.";
+  else narr.textContent = "Eres un seguidor del cacao maya. " + count + " activaciones registradas.";
+
+  setTimeout(() => {
+    document.getElementById("spin").style.display = "none";
+    document.getElementById("check").classList.add("show");
+    document.getElementById("verify-text").textContent = "Origen verificado · Ticul, Yucatán";
+    document.getElementById("verify-text").style.color = "#c8932f";
+  }, 1300);
+  setTimeout(() => {
+    document.getElementById("verify").classList.add("done");
+  }, 2300);
+</script>
+</body>
+</html>
